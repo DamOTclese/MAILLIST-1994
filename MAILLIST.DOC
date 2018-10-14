@@ -1,0 +1,264 @@
+
+
+    MailList.DOC - Documentation for MailList Version 1.001 (Oct 1994)
+    Copyright 1994, Fredric L. Rice, The Skeptic Tank, 1:102/890.0
+    (818) 335-9601, 9600bts, 24 Hours, Public BBS.
+
+Review:
+    This program allows network messages to be sent to a list of
+    people in either FidoNet or in Internet or both.  The SysOp
+    maintains a set of groups in a configuration file.  The groups
+    contain information on each individual in a group consisting
+    of personal names and network addresses (either FidoNet addresses
+    and/or Internet addresses.)  Each group has its own unique origin
+    line for outbound FidoNet messages
+
+    FileAttaches and FileRequests may be performed on a group to
+    allow for both mass mailings as well as mass file requests and
+    distributions.
+
+Files required:
+    There are a few files which are required.
+
+    MailList.CFG - The main configuration file.  This file is self-
+    explanatory and should be modified to fit your needs.  There is
+    nothing in the file which is unexplained or at all confusing.
+    Review the comments within the file for further information on
+    how to configure your mailing lists.
+
+    MailList.ERR - This file contains error messages which are used
+    by MailList.EXE.  They have been removed from the source code
+    and placed into a separate file so that various languages may be
+    used in the program simply by editing this file.  This file also
+    allows comments to be added to it.
+
+    MailList.EXE - This is the executable program.  To invoke the
+    MailList program, simply type MAILLIST at the DOS prompt.
+
+Nodelist and Networks:
+    If you have a 'nodelist' keyword defined in the configuration file,
+    you can use the special user-name of 'network' in a group to take
+    The 'network' user name following a 'name' keyword is followed by the
+    zone:network address.   Example:
+
+                        name    network, 1:218
+
+    You may have as many 'network' type name entries in a group or as many
+    groups with networks defined.  At initialization, the program will
+    examine the nodelist and extract all nodes for the networks you
+    have configured and build a group of names and addresses based
+    upon the whole network.
+
+    Systems which are private, on hold, or marked as down will also be
+    mailed to if you include an entire network into a group.
+
+    While the program is searching for names in a network, you may hit the
+    ESCape key to abort the search.  If there is another user-name with
+    the symbolic name 'network' in a group, you will need to hit ESCape for
+    that group as well if you wish to abort it, too.  The program will
+    display the zone and network which is being accumulated so you will
+    know which network scan you are aborting.
+
+Environment Variable:
+    You may elect to run MailList from the directory where the error
+    message file and the configuration file are stored or you may elect
+    to set an environment variable to tell MailList where to find these
+    two files.  If you wish to execute MailList from any directory,
+    asking the PATH to find your executable, set the MAILLIST environment
+    variable to point to the directory where the MailList.CFG and
+    MailList.ERR files are to be found.  As an example, in your
+    AUTOEXEC.BAT file, add the following:
+
+                set MAILLIST=C:\FD\UTILS\
+
+    The trailing backslash isn't needed as one will be appended to the
+    path if none is offered.
+
+Running the program:
+    After you run MAILLIST from the DOS prompt, the program will read
+    the configuration information into memory and provide a list of the
+    groups which are configured.
+
+    After you select the group number to mail to, you will be asked for
+    the name of a file which contains the message text you wish to send
+    to everyone in the group.  If the file is not found, the program
+    will terminate.
+
+    After the name of the message-text file has been entered, the
+    program will ask you to enter a subject for the message.
+
+    After you have finished entering the subject for the message, MailList
+    will send the message to each individual in the list.  As each
+    message file is created and addressed, MailList will display the
+    status update on the screen, flagging each successfully-created mail
+    message wioth a * character.  The bottom of the screen will show the
+    name of the FidoNet network message.
+
+    When all messages have been sent, the program will terminate
+    normally.
+
+Error messages:
+    If the configuration file has problems with it or if MailList has a
+    problem, a window will open-up on the screen and a detailed error
+    message will be displayed.  The program will then terminate with an
+    errorlevel value so that you may work MailList into a batch file.
+
+ErrorLevel values:
+        #define No_Problem              0
+
+    When the program terminates normally, it returns this value.
+
+        #define Cant_Find_Config_File   10
+
+    If the MailList.CFG file can't be found, this errorlvel value
+    will be returned.  Either the current directory doesn't contain
+    the MailList.CFG file or the MAILLIST environment variable is not
+    pointing to the directory which has the configuration file.
+
+        #define No_Memory               11
+
+    MailList ran out of memory.
+
+        #define Configuration_Bad       12
+
+    Something in the configuration file was bad.  The error message
+    which is offered before this errorlevel value is returned will
+    contain detailed information on what went wrong.
+
+        #define Cant_Create_Message     13
+
+    If for some reason a network message file can't be created, an
+    error message is offered and then the program terminates with
+    this errorlevel value.
+
+        #define Cant_Write_Message      14
+
+    If for some reason a network message file can't be written, an
+    error message is offered and then the program terminates with
+    this errorlevel value.
+
+        #define Cant_Find_Errors_File   15
+
+    If the MailList.ERR file can't be found, this errorlvel value
+    will be returned.  Either the current directory doesn't contain
+    the MailList.ERR file or the MAILLIST environment variable is not
+    pointing to the directory which has the error message file.
+
+        #define Error_File_Corrupted    16
+
+    The MailList.ERR message file is corrupted.  The error message on
+    the display will indicate what the problem was.
+
+        #define Cant_File_Attach        17
+
+    The file for a file attach request couldn't be found or could not
+    be opened because it was in use.  Check to make sure that the file
+    exists and that it may be opened.
+
+        #define Text_File_Missing       18
+
+    The text file which was offered as the message file to send to a
+    group could not be found.  Check to make sure that the file exists
+    and that it may be opened.
+
+Configuration Commands:
+        group {title}
+
+            Defines the name of the mailing list.  The 'group' keyword
+            is usually followed by a 'from' line, a 'directory' line,
+            an 'origin' line, and then any number of 'name' lines which
+            describe the individuals in the group.
+
+        directory {subdirectory}
+
+            Defines the subdirectory where messages that are created
+            are to be placed.
+
+        from {SysOp Name}
+
+            Defines the name of the individual sending the messages.
+            This is usually your name.
+
+        origin {text}
+
+            Defines an origin line for messages sent to a group.
+
+        name {name}, {address}
+        name NETWORK, {subnet}
+
+            Defines the name of an individual in a mailing list and the
+            network address.  The network address may be a FidoNet type
+            of address (zone:net/node.point) or it may be an Internet
+            address (name@path.domain)
+
+            If the name is replaced with the special word NETWORK then
+            all systems in the subnetwork described gets mailed.
+
+        nodelist {full path}
+
+            Points to the FidoNet nodelist.  This is needed if there
+            are any 'NETWORK' type 'name' commands defined.
+
+        zone {zone}
+
+            Your zone number.
+
+        network {subnetwork}
+
+            Your subnetwork number.
+
+        node {node}
+
+            Your subnetwork's node number.
+
+        point {point}
+
+            Your point number.
+
+        uucpzone {zone}
+
+            The zone number of your nearest UUCP Gateway.
+
+        uucpnetwork {subnetwork}
+
+            The subnetwork number of your nearest UUCP Gateway.
+
+        uucpnode {node}
+
+            The node number of your nearest UUCP Gateway.
+
+        uucppoint {point}
+
+            The point number of your nearest UUCP Gateway.
+
+        immediate {yes} || {no}
+
+            Tells MailList if you want to mark mail as IMMediate
+            and DIRect.
+
+        crash {yes} || {no}
+
+            Tells MailList if you want to mark mail as CRASH.
+
+        private {yes} || {no}
+
+            Tells MailList if you want to mark mail as PRIVATE.
+
+        killsent {yes} || {no}
+
+            Tells MailList if you want to mark mail as KILL/SENT.
+
+        filerequest {yes} || {no}
+
+            Tells MailList if you want to enable FileRequests.  If you
+            don't intend to perform FileRequests, you can set this to
+            'NO' so that you won't be asked if your message is a
+            FileRequest every time you send a message.
+
+        fileattach {yes} || {no}
+
+            Tells MailList if you want to enable FileAttach.  If you
+            don't intend to perform FileAttaches, you can set this to
+            'NO' so that you won't be asked if your message is a
+            FileAttach every time you send a message.
+

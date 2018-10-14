@@ -1,0 +1,118 @@
+
+;
+; This is the error message file for MailList.EXE version 1.001.  It
+; may be edited to suit you as you wish however you must make sure
+; that there are 20 error messages defined and that the description
+; doesn't change significantly and that you don't renumber them.  Only
+; the text should change as you see fit.
+;
+; The program will reformat the display to be free-flowing so you may
+; describe an error message as long as you wish.  A blank line tells
+; the program where a description ends.
+;
+; No single error message may exceed 1000 bytes in length.
+;
+
+0, A group name doesn't have a mailing directory defined for it!  The
+   keyword 'directory' needs to be included in every group definition
+   else the program won't be able to create outbound message files.
+   The group which is missing this information is offered below:
+
+1, A group name doesn't have a from name defined for it!  The keyword
+   'from' needs to be included in every group definition else the
+   program will not be able to place a 'from:' name into the outbound
+   message file header.  The group which is missing this information
+   is offered below:
+
+2, A group name doesn't have a origin string defined for it!  There must
+   be an origin line for every group defined.  The group which is
+   missing this information is offered below:
+
+3, I ran out of memory!
+
+4, The configuration file doesn't have a group name defined before
+   a directory name is defined.  The 'directory' keyword must follow
+   the use of the 'group' keyword else the program will not be able to
+   know what group the directory should be assigned to.
+
+5, The configuration file has a group configured which has more
+   than one mailing directory. This is not allowed.  The 'directory'
+   keyword must appear only once in each group that's configured.  The
+   group name where the duplicate appeated is offered below:
+
+6, The configuration file doesn't have a group name defined before
+   a from name is defined.  The 'from' keyword must follow the 'group'
+   keyword else the program will not know what group the 'from' name
+   should be assigned to.
+
+7, The configuration file has a group with more than one from name
+   defined.  This is not allowed.  There must only be one 'from'
+   keyword for every group defined.  The group name where the duplicate
+   appeared is offered below:
+
+8, From name is too large! Must be 35 characters or less.  This limit is
+   imposed by the FidoNet message protocol and can not be changed.  The
+   configuration line I was trying to examine is offered below:
+
+9, The configuration file doesn't have a group name defined before
+   an origin string is defined.  The 'origin' keyword must follow the
+   'group' keyword else the program will not know which group the origin
+   should be assigned to.
+
+10, The configuration file has a group with more than one origin
+    lines defined for it. This is not allowed.  There may only be one
+    'origin' line in the definition of a group.  The group name where
+    the duplicate appeated is offered below:
+
+11, The configuration file doesn't have a group name defined before
+    a user name is defined.  The 'name' keyword must follow a 'group'
+    keyword else the program will not know what group to place the name
+    into.
+
+12, Configuration file name entry doesn't have a proper format.
+    I need the users name and the mailing address separated by a
+    comma.  The configuration line I was trying to examine is offered
+    below:
+
+13, A name is too large! It must be 35 characters or less!  There is an
+    entry with the keyword 'name' which exceeds 35 characters.  This
+    limit is imposed by the FidoNet message protocol and can not be
+    changed.  The configuration line I was trying to examine is
+    offered below:
+
+14, A name of a user does not appear to have a valid address. If it's
+    an Internet address it needs to have at least one @ character in
+    it.  If it is FidoNet, it must be zone:net/node.point.  If any of
+    these address elements are missing, the program will refuse to run.
+    If the name is an entire network, either the network address was not
+    complete or there is no 'nodelist' defined in the configuration file.
+    The configuration line I was trying to examine is offered below:
+
+15, I am unable to run as I can't find the configuration file
+    'MAILLIST.CFG' in the current directory.  This file is needed to
+    define the groups in the mailing lists.  You may define the
+    environment variable MAILLIST to point to the directory of where
+    the configuration file is.  An example would be: set MAILLIST=C:\FD\
+    The configuration file searched for is offered below:
+
+16, I can't create the message file!  The outbound FidoNet network
+    message couldn't be created.  Either the outbound network mail
+    directory doesn't exist else there is not enough disk space left to
+    create a new file.  The file name which couldn't be created is
+    offered below:
+
+17, I couldn't write the message file!  The outbound FidoNet network
+    message couldn't be written.  The most probable problem is that the
+    drive specified in a 'directory' keyword is out of disk space.  The
+    file name I tried to write to is offered below:
+
+18, The file name you have offered for a FileAttach request could not
+    be located.  Please check to make sure that the file actually exists
+    and that it is available for open and run the program again.  The
+    file name which couldn't be found is offered below:
+
+19, The file name you offered to send as message text to a group could
+    not be found or opened.  Check to make sure that the file actually
+    exists and that the file can be opened (the file may be in use.)
+    The file name I tried to open is offered below:
+
